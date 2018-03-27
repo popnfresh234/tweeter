@@ -89,6 +89,6 @@ $(document).ready(function(){
   renderTweets(data);
   $('.new-tweet').find('input').on('click', function(event){
     event.preventDefault();
+    console.log($(this).parent().serialize());
   });
-
 });
