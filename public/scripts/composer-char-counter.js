@@ -1,6 +1,12 @@
 $(document).ready(function(){
     $('.new-tweet textarea').on('keyup', function(){
-
-      $(this).parent().find('span').text(140 - $(this).val().length);
+      let tweetLength = 140 - $(this).val().length;
+      let counter = $(this).parent().find('span');
+      counter.text(tweetLength);
+      if (tweetLength < 0) {
+        counter.addClass('red-text');
+      } else {
+        counter.removeClass('red-text');
+      }
   });
 });
