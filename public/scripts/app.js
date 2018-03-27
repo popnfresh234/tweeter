@@ -20,31 +20,16 @@
   "created_at": 1461116232227
 };
 
-// <article class="tweet-article">
-//   <header class="tweet-header">
-//     <img src="/images/smiley.png"/>
-//     <h4>Bill Fields</h4>
-//     <h6>@MrFields</h6>
-//   </header>
-//   <p>Little tweet here</p>
-//   <footer class=tweet-footer>
-//     <p>10 days ago</p>
-//     <i class="fas fa-heart icons"></i>
-//     <i class="fas fa-retweet icons"></i>
-//     <i class="fas fa-flag icons"></i>
-//   </footer>
-// </article>
-
 function createTweetElement(tweet){
   let $tweet = $("<article>").addClass("tweet-article");
 
   //build header
   let header = $("<header>").addClass("tweet-header");
-  header.append('<img src="/images/smiley.png"/>');
-  header.append('<h4>Bill Fields</h4>');
-  header.append('<h6>@MrFields</h6>');
+  header.append('<img src="' + tweet.user.avatars.small + '"/>');
+  header.append('<h4>'+tweet.user.name +'</h4>');
+  header.append('<h6>' +tweet.user.handle + '</h6>');
   $tweet.append(header);
-  $tweet.append('<p>Little tweet here</p>');
+  $tweet.append('<p>' + tweet.content.text + '</p>');
 
   let footer = $("<footer>").addClass("tweet-footer");
   footer.append('<p>10 days ago</p>');
@@ -60,8 +45,6 @@ function createTweetElement(tweet){
 
 // Test / driver code (temporary)
 $(document).ready(function(){
-  for (var i = 0; i < 10; i ++){
-    var $tweet = createTweetElement(tweetData);
-    $('#tweets-section').append($tweet);
-  }
+  var $tweet = createTweetElement(tweetData);
+  $('#tweets-section').append($tweet);
 });
