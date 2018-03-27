@@ -87,4 +87,8 @@ function renderTweets(tweets){
 // Test / driver code (temporary)
 $(document).ready(function(){
   renderTweets(data);
+  $('.new-tweet').find('input').on('click', function(event){
+    event.preventDefault();
+  });
+
 });
