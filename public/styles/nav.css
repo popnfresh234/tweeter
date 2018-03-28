@@ -7,7 +7,7 @@
   background-color: #00a087;
   color: #e8fdff;
   padding: 0 2em;
-  z-index: 1030;2
+  z-index: 1030;
 }
 
 #nav-bar .logo {
@@ -21,5 +21,37 @@
   margin-left: 10px;
   float: left;
   font-size: 2em;
-  line-height: 2.5em;
+  line-height: 80px;
+}
+
+#nav-bar ul {
+  height: 80px;
+  line-height: 38px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+#nav-bar li {
+  float: right;
+}
+
+#nav-bar li a {
+  padding: 10px 20px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #E6FEFF;
+  color: #2EC4A8;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+#nav-bar li a:hover {
+  background-color: white;
+  color: black;
 }

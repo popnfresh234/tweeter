@@ -12,7 +12,8 @@
 }
 
 .new-tweet .counter {
-  float: right
+  float: right;
+  font-style: italic;
 }
 
 .new-tweet .tweet-error {

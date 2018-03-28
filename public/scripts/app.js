@@ -36,7 +36,7 @@ function escape(str) {
 }
 
 function renderTweets (tweets) {
-  tweets.forEach(function (tweet) {
+  tweets.forEach((tweet) => {
     var $tweet = createTweetElement (tweet);
     $('#tweets-section').prepend ($tweet);
   });
@@ -80,7 +80,7 @@ function handleTweet(tweet){
 }
 
 // Test / driver code (temporary)
-$(document).ready( function () {
+$( function () {
   loadTweets();
   //Handle new tweets
   $('.new-tweet').find('input').on('click', function (event) {
