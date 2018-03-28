@@ -47,6 +47,7 @@
   padding: 8px;
   clear:both;
   overflow: auto;
+  opacity: 0.6;
 }
 
 .tweet-footer {
@@ -64,6 +65,10 @@
   margin: 8px 4px;
   visibility: hidden;
   float:right;
+}
+
+.tweet-article:hover .tweet-header {
+  opacity: 1;
 }
 
 .tweet-article:hover .tweet-footer .icons{
