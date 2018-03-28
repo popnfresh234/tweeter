@@ -25,12 +25,8 @@ function escape(str) {
   $tweet.append('<p>' + escape(tweet.content.text) + '</p>');
 
   //build and append
-  var timeDiff = moment(tweet.created_at).fromNow();
-
-
-
   var footer = $('<footer>').addClass('tweet-footer')
-  .append('<p>' + timeDiff + '</p>')
+  .append('<p>' + moment(tweet.created_at).fromNow() + '</p>')
   .append('<i class="fas fa-heart icons"></i>')
   .append('<i class="fas fa-retweet icons"></i>')
   .append('<i class="fas fa-flag icons"></i>');
