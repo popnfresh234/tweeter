@@ -71,7 +71,7 @@ function handleTweet(tweet){
   if ( input.length > 140 ) {
     $(errorMsg).text('Tweet is too long!');
     $(errorMsg).css('visibility', 'visible');
-  }else if( input === "" ) {
+  } else if ( input === "" ) {
     $(errorMsg).text('Empty tweet');
     $(errorMsg).css('visibility', 'visible');
   } else {
