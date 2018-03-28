@@ -3,6 +3,11 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
+function escape(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
 
  function createTweetElement(tweet){
   var $tweet = $('<article>').addClass('tweet-article');
@@ -10,13 +15,13 @@
   //build header
   var header = $('<header>').addClass('tweet-header')
   .append('<img src="' + tweet.user.avatars.small + '"/>')
-  .append('<h4>'+tweet.user.name +'</h4>')
-  .append('<h6>' +tweet.user.handle + '</h6>');
+  .append('<h4>' + tweet.user.name +'</h4>')
+  .append('<h6>' + tweet.user.handle + '</h6>');
 
   $tweet.append(header);
 
   //add content
-  $tweet.append('<p>' + tweet.content.text + '</p>');
+  $tweet.append('<p>' + escape(tweet.content.text) + '</p>');
 
   //build and append
   var footer = $('<footer>').addClass('tweet-footer')
