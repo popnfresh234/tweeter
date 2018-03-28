@@ -87,4 +87,14 @@ $( function () {
     event.preventDefault();
     handleTweet($(this).parent().serialize());
   });
+
+  $('a').on('click', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('href');
+    if (id === 'compose') {
+      $('.new-tweet').slideToggle('slow', function(){
+        $('.new-tweet').find('textarea').focus();
+      });
+    }
+  });
 });
