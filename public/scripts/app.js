@@ -1,3 +1,4 @@
+
 /*
  * Client-side JS logic goes here
  * jQuery is already loaded
@@ -24,8 +25,12 @@ function escape(str) {
   $tweet.append('<p>' + escape(tweet.content.text) + '</p>');
 
   //build and append
+  var timeDiff = moment(tweet.created_at).fromNow();
+
+
+
   var footer = $('<footer>').addClass('tweet-footer')
-  .append('<p>10 days ago</p>')
+  .append('<p>' + timeDiff + '</p>')
   .append('<i class="fas fa-heart icons"></i>')
   .append('<i class="fas fa-retweet icons"></i>')
   .append('<i class="fas fa-flag icons"></i>');
@@ -82,6 +87,7 @@ function handleTweet(tweet){
 // Test / driver code (temporary)
 $( function () {
   loadTweets();
+  console.log(moment().startOf('hour').fromNow());
   //Handle new tweets
   $('.new-tweet').find('input').on('click', function (event) {
     event.preventDefault();
