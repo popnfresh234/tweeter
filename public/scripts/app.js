@@ -33,7 +33,7 @@
 function renderTweets (tweets) {
   tweets.forEach(function (tweet) {
     var $tweet = createTweetElement (tweet);
-    $('#tweets-section').append ($tweet);
+    $('#tweets-section').prepend ($tweet);
   });
 }
 
@@ -47,7 +47,20 @@ function loadTweets () {
   });
 }
 
-function handleTweet(input){
+function postTweet (tweet) {
+  $.ajax({
+    url: '/tweets',
+    method: 'POST',
+    data: tweet,
+    dataType: 'text',
+    success: function (){
+     loadTweets();
+    }
+  });
+}
+
+function handleTweet(tweet){
+  var input = tweet.split('=')[1];
   var errorMsg = $('.tweet-error');
   if ( input.length > 140 ) {
     $(errorMsg).text('Tweet is too long!');
@@ -57,7 +70,7 @@ function handleTweet(input){
     $(errorMsg).css('visibility', 'visible');
   } else {
     errorMsg.css('visibility', 'hidden');
-    console.log('Submit!');
+    postTweet(tweet);
   }
 }
 
@@ -67,6 +80,6 @@ $(document).ready( function () {
   //Handle new tweets
   $('.new-tweet').find('input').on('click', function (event) {
     event.preventDefault();
-    handleTweet($(this).parent().serialize().split('=')[1]);
+    handleTweet($(this).parent().serialize());
   });
 });
