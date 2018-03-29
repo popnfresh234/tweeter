@@ -82,6 +82,7 @@ module.exports = function(DataHelpers) {
 
 
   tweetsRoutes.post('/register', (req, res) => {
+    console.log("GOOD REG");
     let email = req.body.email;
     let password = req.body.password;
 
@@ -96,6 +97,9 @@ module.exports = function(DataHelpers) {
           console.log(err.errmsg);
           res.redirect('/');
         } else {
+          console.log("success");
+          req.session[COOKIE_USERNAME] = user.name;
+          req.session[COOKIE_EMAIL] = user.email;
           res.redirect('/');
         }
       });

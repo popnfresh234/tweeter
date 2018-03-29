@@ -27,6 +27,7 @@ module.exports = function makeDataHelpers(db) {
       db.collection('users').insertOne(user).catch((err) => {
         callback(err);
       });
+      callback(null, true);
     }
   };
 };

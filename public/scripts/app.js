@@ -40,21 +40,22 @@ function createTweetElement(tweet){
 }
 
 function handleLoginState(){
-  if (loggedInUser){
+  if (loggedInUser && userEmail){
     $('#compose-menu').css('visibility', 'visible');
-    $('.header-login').hide();
-    $('.header').after('<span id="user-name" class="header-login">' + loggedInUser + '</span>');
+    $('.header-login a').hide();
+    $('#user-name').html(loggedInUser);
     $('#nav-bar #logout-menu').css('visibility', 'visible');
   } else {
-    $('.header-login').show();
+    $('.header-login a').show();
+    $('#user-name').text('');
     $('#logout-menu').css('visibility', 'hidden');
-    $('#user-name').remove();
     $('#compose-menu').css('visibility', 'hidden');
   }
 }
 
 function renderTweets (tweets) {
   console.log(tweets.length);
+  $('#tweets-section').empty();
   tweets.forEach((tweet) => {
     var $tweet = createTweetElement (tweet);
     $('#tweets-section').prepend ($tweet);
