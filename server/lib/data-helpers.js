@@ -20,13 +20,12 @@ module.exports = function makeDataHelpers(db) {
     },
 
     getUser: function(email, callback) {
-      db.collection("users").find({email: email}, callback);
+      db.collection("users").findOne({email: email}, callback);
     },
 
     addUser:function(user, callback){
       this.getUser(user.email, function (err, cursor){
         db.collection('users').insertOne(user);
-        console.log("We can create user");
       });
     }
   };

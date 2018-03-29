@@ -1,4 +1,6 @@
 
+const COOKIE_USERNAME = 'username';
+
 const userHelper    = require("../lib/util/user-helper")
 
 const express       = require('express');
@@ -25,6 +27,7 @@ function generateRandomString(length){
 module.exports = function(DataHelpers) {
 
   tweetsRoutes.get("/", function(req, res) {
+    console.log(req.session[COOKIE_USERNAME]);
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -32,6 +35,21 @@ module.exports = function(DataHelpers) {
         res.json(tweets);
       }
     });
+  });
+
+
+  tweetsRoutes.post('/login', function(req, res){
+    let email = req.body.email;
+    let password = req.body.password;
+    DataHelpers.getUser(email, (error, user) => {
+      if(user && bcrypt.compareSync(password, user.passwordHash)){
+        req.session[COOKIE_USERNAME] = user.name;
+        res.redirect('/');
+      } else {
+        res.redirect('/');
+      }
+    });
+
   });
 
   tweetsRoutes.post("/", function(req, res) {
@@ -58,12 +76,6 @@ module.exports = function(DataHelpers) {
     });
   });
 
-  tweetsRoutes.post('/login', function(req, res){
-    let email = req.body.email;
-    let password = req.body.password;
-    console.log(email);
-    console.log(password);
-  });
 
   tweetsRoutes.post('/register', (req, res) => {
     let email = req.body.email;
