@@ -14,7 +14,7 @@ function escape(str) {
   var $tweet = $('<article>').addClass('tweet-article');
 
   //build header
-  var header = $('<header>').addClass('tweet-header')
+  var header = $('<header data-id="' + tweet._id + '">').addClass('tweet-header')
   .append('<img src="' + tweet.user.avatars.small + '"/>')
   .append('<h4>' + tweet.user.name +'</h4>')
   .append('<h6>' + tweet.user.handle + '</h6>');
