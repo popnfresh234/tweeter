@@ -1,7 +1,7 @@
 
 const COOKIE_USERNAME = 'username';
-
-const userHelper    = require("../lib/util/user-helper")
+const COOKIE_EMAIL = "email";
+const userHelper    = require("../lib/util/user-helper");
 
 const express       = require('express');
 const tweetsRoutes  = express.Router();
@@ -19,12 +19,13 @@ tweetsRoutes.use(cookieSession({
 module.exports = function(DataHelpers) {
   tweetsRoutes.get("/", function(req, res) {
     const username = req.session[COOKIE_USERNAME];
+    const email = req.session[COOKIE_EMAIL];
     console.log(username);
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.json({tweets, username});
+        res.json({tweets, username, email});
       }
     });
   });
@@ -36,6 +37,7 @@ module.exports = function(DataHelpers) {
     DataHelpers.getUser(email, (error, user) => {
       if(user && bcrypt.compareSync(password, user.passwordHash)){
         req.session[COOKIE_USERNAME] = user.name;
+        req.session[COOKIE_EMAIL] = user.email;
         res.redirect('/');
       } else {
         res.redirect('/');
@@ -50,27 +52,31 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post("/", function(req, res) {
-    if (!req.body.text) {
+    if (!req.body.tweet || !req.body.userEmail) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
 
-    const user = req.body.user ? req.body.user : userHelper.generateRandomUser('test@test.test', 'asdgsagsa');
-    const tweet = {
-      user: user,
-      content: {
-        text: req.body.text
-      },
-      created_at: Date.now()
-    };
-
-    DataHelpers.saveTweet(tweet, (err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        res.status(201).send();
-      }
+    DataHelpers.getUser(req.body.userEmail, (err, result) => {
+      const user = result;
+      console.log(req.body);
+      const tweet = {
+        user: user,
+        content: {
+          text: req.body.tweet
+        },
+        created_at: Date.now()
+      };
+      DataHelpers.saveTweet(tweet, (err) => {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.status(201).send();
+        }
+      });
     });
+
+
   });
 
 
@@ -90,7 +96,6 @@ module.exports = function(DataHelpers) {
           console.log(err.errmsg);
           res.redirect('/');
         } else {
-          console.log("REDIRECT");
           res.redirect('/');
         }
       });

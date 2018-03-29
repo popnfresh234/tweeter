@@ -5,6 +5,7 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
  var loggedInUser;
+ var userEmail;
 
  function escape(str) {
   var div = document.createElement('div');
@@ -53,6 +54,7 @@ function handleLoginState(){
 }
 
 function renderTweets (tweets) {
+  console.log(tweets.length);
   tweets.forEach((tweet) => {
     var $tweet = createTweetElement (tweet);
     $('#tweets-section').prepend ($tweet);
@@ -63,8 +65,9 @@ function loadTweets () {
   $.ajax({
     url: '/tweets',
     method: 'GET',
-    success: function ({tweets, username}, status) {
+    success: function ({tweets, username, email}, status) {
       loggedInUser = username;
+      userEmail = email;
       handleLoginState();
       renderTweets(tweets);
     }
@@ -75,8 +78,7 @@ function postTweet (tweet) {
   $.ajax({
     url: '/tweets',
     method: 'POST',
-    data: tweet,
-    dataType: 'text',
+    data: {tweet, userEmail},
     success: function (){
      loadTweets();
    }
@@ -84,12 +86,11 @@ function postTweet (tweet) {
 }
 
 function handleTweet(tweet){
-  var input = tweet.split('=')[1];
   var errorMsg = $('.tweet-error');
-  if ( input.length > 140 ) {
+  if ( tweet.length > 140 ) {
     $(errorMsg).text('Tweet is too long!');
     $(errorMsg).css('visibility', 'visible');
-  } else if ( input === "" ) {
+  } else if ( tweet === "" ) {
     $(errorMsg).text('Empty tweet');
     $(errorMsg).css('visibility', 'visible');
   } else {
@@ -107,7 +108,8 @@ $( function () {
   //Handle new tweets
   $('.new-tweet').find('input').on('click', function (event) {
     event.preventDefault();
-    handleTweet($(this).parent().serialize());
+    handleTweet($(this).parent().find('textarea').val());
+    //handleTweet($(this).parent().serialize());
   });
 
   //Handle clicks on nav menu
@@ -126,6 +128,7 @@ $( function () {
         method: 'POST',
         success: function (){
           loggedInUser = "";
+          userEmail = "";
           handleLoginState();
         }
       });
