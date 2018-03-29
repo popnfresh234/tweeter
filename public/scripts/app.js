@@ -83,6 +83,8 @@ function handleTweet(tweet){
 
 // Test / driver code (temporary)
 $( function () {
+  var KEY_LIKED = "liked";
+
   loadTweets();
   console.log(moment().startOf('hour').fromNow());
   //Handle new tweets
@@ -104,6 +106,14 @@ $( function () {
   //Listen for delegated event on tweets section
   $('#tweets-section').on('click', '.heart', function(event){
     var id = $(event.target).closest('article').data();
-    $(this).prev().text('1');
+    var likes = 0;
+    if($(this).data(KEY_LIKED)){
+       likes = Number($(this).prev().text()) - 1;;
+      $(this).data(KEY_LIKED, false);
+    } else {
+      likes = Number($(this).prev().text()) + 1;
+      $(this).data(KEY_LIKED, true);
+    }
+    $(this).prev().text(likes);
   });
 });
