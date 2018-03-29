@@ -107,13 +107,14 @@ $( function () {
   $('#tweets-section').on('click', '.heart', function(event){
     var id = $(event.target).closest('article').data();
     var likes = 0;
+    var counter = $(this).prev();
     if($(this).data(KEY_LIKED)){
-       likes = Number($(this).prev().text()) - 1;;
+       likes = Number(counter.text()) - 1;
       $(this).data(KEY_LIKED, false);
     } else {
-      likes = Number($(this).prev().text()) + 1;
+      likes = Number(counter.text()) + 1;
       $(this).data(KEY_LIKED, true);
     }
-    $(this).prev().text(likes);
+    counter.text(likes);
   });
 });
