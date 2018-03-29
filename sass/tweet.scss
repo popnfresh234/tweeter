@@ -1,25 +1,29 @@
+$borederRadius: 10px;
+$standardMargin: 8px;
+$standardPadding: 8px;
+
 .tweet-article{
   margin: 0 2em;
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: $borederRadius;
 }
 
 .tweet-article {
-  margin-top: 32px;
+  margin-top: $standardMargin * 4;
 }
 
 .tweet-article header{
-  border-radius: 10px 10px 0px 0px;
+  border-radius: $borederRadius $borederRadius 0px 0px;
   background-color: #eee;
 }
 
 .tweet-article h4 {
-  margin: 0px 8px;
+  margin: 0px $standardMargin;
   float: left;
 }
 
 .tweet-article h6 {
-  margin: 8px 0px;
+  margin: $standardMargin 0px;
   float: right;
   color: grey;
 }
@@ -31,7 +35,7 @@
 }
 
 .tweet-article p{
-  margin: 16px;
+  margin: $standardMargin * 2;
 }
 
 .tweet-article footer {
@@ -39,12 +43,12 @@
 }
 
 .tweet-article footer p{
-  margin: 8px;
+  margin: $standardMargin;
   font-size: 0.8em;
 }
 
 .tweet-header {
-  padding: 8px;
+  padding: $standardPadding;
   clear:both;
   overflow: auto;
   opacity: 0.6;
@@ -62,7 +66,7 @@
 
 .tweet-footer .icons {
   color: #57CCB6;
-  margin: 8px 4px;
+  margin: $standardMargin $standardMargin / 2;
   visibility: hidden;
   float:right;
 }

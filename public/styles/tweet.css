@@ -1,4 +1,4 @@
-.tweet-article{
+.tweet-article {
   margin: 0 2em;
   border: 1px solid black;
   border-radius: 10px;
@@ -8,7 +8,7 @@
   margin-top: 32px;
 }
 
-.tweet-article header{
+.tweet-article header {
   border-radius: 10px 10px 0px 0px;
   background-color: #eee;
 }
@@ -30,7 +30,7 @@
   width: 40px;
 }
 
-.tweet-article p{
+.tweet-article p {
   margin: 16px;
 }
 
@@ -38,14 +38,14 @@
   border-top: 1px solid grey;
 }
 
-.tweet-article footer p{
+.tweet-article footer p {
   margin: 8px;
   font-size: 0.8em;
 }
 
 .tweet-header {
   padding: 8px;
-  clear:both;
+  clear: both;
   overflow: auto;
   opacity: 0.6;
 }
@@ -64,13 +64,13 @@
   color: #57CCB6;
   margin: 8px 4px;
   visibility: hidden;
-  float:right;
+  float: right;
 }
 
 .tweet-article:hover .tweet-header {
   opacity: 1;
 }
 
-.tweet-article:hover .tweet-footer .icons{
+.tweet-article:hover .tweet-footer .icons {
   visibility: visible;
 }
