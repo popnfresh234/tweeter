@@ -24,8 +24,8 @@ module.exports = function makeDataHelpers(db) {
     },
 
     addUser:function(user, callback){
-      this.getUser(user.email, function (err, cursor){
-        db.collection('users').insertOne(user);
+      db.collection('users').insertOne(user).catch((err) => {
+        callback(err);
       });
     }
   };

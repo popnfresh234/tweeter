@@ -14,25 +14,17 @@ tweetsRoutes.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000
 }));
 
-function generateRandomString(length){
-  let randomString = '';
-  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < length; i++) {
-    let randomNumber = Math.floor(Math.random() * chars.length);
-    randomString += chars.charAt(randomNumber);
-  }
-  return randomString;
-}
+
 
 module.exports = function(DataHelpers) {
-
   tweetsRoutes.get("/", function(req, res) {
-    console.log(req.session[COOKIE_USERNAME]);
+    const username = req.session[COOKIE_USERNAME];
+    console.log(username);
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.json(tweets);
+        res.json({tweets, username});
       }
     });
   });
@@ -49,7 +41,12 @@ module.exports = function(DataHelpers) {
         res.redirect('/');
       }
     });
+  });
 
+  tweetsRoutes.post('/logout', (req, res) => {
+    req.session = null;
+    console.log("BYE");
+    res.redirect('/tweets');
   });
 
   tweetsRoutes.post("/", function(req, res) {
@@ -77,6 +74,7 @@ module.exports = function(DataHelpers) {
   });
 
 
+
   tweetsRoutes.post('/register', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
@@ -89,7 +87,8 @@ module.exports = function(DataHelpers) {
     } else {
       DataHelpers.addUser(user, (err) => {
         if(err){
-          console.log(err);
+          console.log(err.errmsg);
+          res.redirect('/');
         } else {
           console.log("REDIRECT");
           res.redirect('/');

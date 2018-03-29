@@ -4,13 +4,15 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-function escape(str) {
+ var loggedInUser;
+
+ function escape(str) {
   var div = document.createElement('div');
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
 }
 
- function createTweetElement(tweet){
+function createTweetElement(tweet){
   var $tweet = $('<article>').addClass('tweet-article');
 
   //build header
@@ -36,6 +38,20 @@ function escape(str) {
   return $tweet;
 }
 
+function handleLoginState(){
+  if (loggedInUser){
+    $('#compose-menu').css('visibility', 'visible');
+    $('.header-login').hide();
+    $('.header').after('<span id="user-name" class="header-login">' + loggedInUser + '</span>');
+    $('#nav-bar #logout-menu').css('visibility', 'visible');
+  } else {
+    $('.header-login').show();
+    $('#logout-menu').css('visibility', 'hidden');
+    $('#user-name').remove();
+    $('#compose-menu').css('visibility', 'hidden');
+  }
+}
+
 function renderTweets (tweets) {
   tweets.forEach((tweet) => {
     var $tweet = createTweetElement (tweet);
@@ -47,8 +63,10 @@ function loadTweets () {
   $.ajax({
     url: '/tweets',
     method: 'GET',
-    success: function (jsonTweets) {
-      renderTweets(jsonTweets);
+    success: function ({tweets, username}, status) {
+      loggedInUser = username;
+      handleLoginState();
+      renderTweets(tweets);
     }
   });
 }
@@ -61,8 +79,8 @@ function postTweet (tweet) {
     dataType: 'text',
     success: function (){
      loadTweets();
-    }
-  });
+   }
+ });
 }
 
 function handleTweet(tweet){
@@ -86,19 +104,30 @@ function handleTweet(tweet){
 // Test / driver code (temporary)
 $( function () {
   loadTweets();
-  console.log(moment().startOf('hour').fromNow());
   //Handle new tweets
   $('.new-tweet').find('input').on('click', function (event) {
     event.preventDefault();
     handleTweet($(this).parent().serialize());
   });
 
-  $('a').on('click', function (event) {
+  //Handle clicks on nav menu
+  $('.nav-menu a').on('click', function (event) {
     event.preventDefault();
     var id = $(this).attr('href');
     if (id === 'compose') {
       $('.new-tweet').slideToggle('slow', function(){
         $('.new-tweet').find('textarea').focus();
+      });
+    }
+
+    if (id === 'logout'){
+      $.ajax({
+        url: '/tweets/logout',
+        method: 'POST',
+        success: function (){
+          loggedInUser = "";
+          handleLoginState();
+        }
       });
     }
   });
