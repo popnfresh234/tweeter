@@ -1,0 +1,9 @@
+.login-section label {
+  margin: 10px;
+  display: inline-block;
+  width: 70px;
+}
+
+.login-section input {
+  margin-left: 10px;
+}
