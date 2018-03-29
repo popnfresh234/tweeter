@@ -76,6 +76,9 @@ function handleTweet(tweet){
     $(errorMsg).css('visibility', 'visible');
   } else {
     errorMsg.css('visibility', 'hidden');
+    //clear out data and rest counter
+    $('.new-tweet span').last().text('140');
+    $('.new-tweet textarea').val('');
     postTweet(tweet);
   }
 }
