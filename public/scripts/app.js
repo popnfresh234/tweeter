@@ -11,10 +11,10 @@ function escape(str) {
 }
 
  function createTweetElement(tweet){
-  var $tweet = $('<article>').addClass('tweet-article');
+  var $tweet = $('<article data-id="' + tweet._id + '">').addClass('tweet-article');
 
   //build header
-  var header = $('<header data-id="' + tweet._id + '">').addClass('tweet-header')
+  var header = $('<header>').addClass('tweet-header')
   .append('<img src="' + tweet.user.avatars.small + '"/>')
   .append('<h4>' + tweet.user.name +'</h4>')
   .append('<h6>' + tweet.user.handle + '</h6>');
@@ -27,9 +27,10 @@ function escape(str) {
   //build and append
   var footer = $('<footer>').addClass('tweet-footer')
   .append('<p>' + moment(tweet.created_at).fromNow() + '</p>')
-  .append('<i class="fas fa-heart icons"></i>')
-  .append('<i class="fas fa-retweet icons"></i>')
-  .append('<i class="fas fa-flag icons"></i>');
+  .append('<span class="icons like-counter">0</span>')
+  .append('<span class="heart"><i class="fas fa-heart icons"></i></span>')
+  .append('<span><i class="fas fa-retweet icons"></i></span>')
+  .append('<span><i class="fas fa-flag icons"></i></span>');
 
   $tweet.append(footer);
 
@@ -98,5 +99,11 @@ $( function () {
         $('.new-tweet').find('textarea').focus();
       });
     }
+  });
+
+  //Listen for delegated event on tweets section
+  $('#tweets-section').on('click', '.heart', function(event){
+    var id = $(event.target).closest('article').data();
+    $(this).prev().text('1');
   });
 });

@@ -60,6 +60,12 @@
   float: left;
 }
 
+.tweet-footer .like-counter {
+  width: 1.125em;
+  text-align: center;
+  height: 16px;
+}
+
 .tweet-footer .icons {
   color: #57CCB6;
   margin: 8px 4px;
