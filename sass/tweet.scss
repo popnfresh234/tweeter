@@ -34,8 +34,9 @@ $standardPadding: 8px;
   width: 40px;
 }
 
-.tweet-article p{
+.tweet-article p {
   margin: $standardMargin * 2;
+  overflow-wrap: break-word;
 }
 
 .tweet-article footer {
