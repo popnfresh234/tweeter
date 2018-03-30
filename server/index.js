@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 
 
 // Basic express setup:
@@ -13,7 +13,8 @@ app.use(express.static("public"));
 
 //Mongo
 const mongoClient = require("mongodb").MongoClient;
-const MONGODB_URI = "mongodb://localhost:27017/tweeter";
+const MONGODB_URI = process.env.MONGODB_URI;
+console.log(MONGODB_URI);
 mongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
     console.error(`Failed to connect: ${MONGODB_URI}`);
