@@ -97,7 +97,33 @@ main {
   background-color: white;
   color: black; }
 
-@impot 'new-tweet';
+.new-tweet {
+  padding: 1em;
+  margin: 0 2em;
+  background-color: #eee;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: none; }
+
+.new-tweet h2 {
+  margin-top: 0;
+  border-bottom: 1px solid black; }
+
+.new-tweet .counter {
+  float: right;
+  font-style: italic; }
+
+.new-tweet .tweet-error {
+  color: red;
+  visibility: hidden; }
+
+.new-tweet textarea {
+  width: 100%;
+  height: 100px; }
+
+.red-text {
+  color: red; }
+
 .tweet-article {
   margin: 0 2em;
   border: 1px solid black;
