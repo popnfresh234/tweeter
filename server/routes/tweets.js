@@ -1,6 +1,5 @@
 
-const COOKIE_USERNAME = 'username';
-const COOKIE_EMAIL = "email";
+const COOKIE_USER = 'user';
 const userHelper    = require("../lib/util/user-helper");
 
 const express       = require('express');
@@ -18,14 +17,12 @@ tweetsRoutes.use(cookieSession({
 
 module.exports = function(DataHelpers) {
   tweetsRoutes.get("/", function(req, res) {
-    const username = req.session[COOKIE_USERNAME];
-    const email = req.session[COOKIE_EMAIL];
-    console.log(username);
+    const user = req.session[COOKIE_USER];
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.json({tweets, username, email});
+        res.json({tweets, user});
       }
     });
   });
@@ -36,8 +33,7 @@ module.exports = function(DataHelpers) {
     let password = req.body.password;
     DataHelpers.getUser(email, (error, user) => {
       if(user && bcrypt.compareSync(password, user.passwordHash)){
-        req.session[COOKIE_USERNAME] = user.name;
-        req.session[COOKIE_EMAIL] = user.email;
+        req.session[COOKIE_USER] = user;
         res.redirect('/');
       } else {
         res.redirect('/');
@@ -52,14 +48,13 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post("/", function(req, res) {
-    if (!req.body.tweet || !req.body.userEmail) {
+    if (!req.body.loggedInUser) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
 
-    DataHelpers.getUser(req.body.userEmail, (err, result) => {
+    DataHelpers.getUser(req.body.loggedInUser.email, (err, result) => {
       const user = result;
-      console.log(req.body);
       const tweet = {
         user: user,
         content: {
@@ -82,11 +77,12 @@ module.exports = function(DataHelpers) {
 
 
   tweetsRoutes.post('/register', (req, res) => {
-    console.log("GOOD REG");
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
     let email = req.body.email;
     let password = req.body.password;
 
-    let user = userHelper.generateRandomUser(email, password);
+    let user = userHelper.generateRandomUser(firstName, lastName, email, password);
 
     if (!email || !password) {
       res.statusCode = 400;
@@ -98,14 +94,11 @@ module.exports = function(DataHelpers) {
           res.redirect('/');
         } else {
           console.log("success");
-          req.session[COOKIE_USERNAME] = user.name;
-          req.session[COOKIE_EMAIL] = user.email;
+          req.session[COOKIE_USER] = user;
           res.redirect('/');
         }
       });
-
     }
   });
-
   return tweetsRoutes;
 };

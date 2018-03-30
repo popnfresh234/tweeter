@@ -8,19 +8,14 @@ const md5 = require('md5');
 
 module.exports = {
 
-  generateRandomUser: (email, password) => {
+  generateRandomUser: (inputFirstName, inputLastName, email, password) => {
     const gender    = chance.gender();
-    const firstName = chance.first({gender: gender});
-    const lastName  = chance.last();
+    const firstName = inputFirstName;
+    const lastName  = inputLastName;
     const userName  = firstName + " " + lastName;
 
 
     let userHandle = "@";
-    if (Math.random() > 0.5) {
-      let prefix    = chance.prefix({gender: gender});
-      prefix = prefix.replace(".", "");
-      userHandle += prefix;
-    }
 
     userHandle += lastName;
 

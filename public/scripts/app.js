@@ -5,7 +5,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
  var loggedInUser;
- var userEmail;
 
  function escape(str) {
   var div = document.createElement('div');
@@ -40,10 +39,10 @@ function createTweetElement(tweet){
 }
 
 function handleLoginState(){
-  if (loggedInUser && userEmail){
+  if (loggedInUser){
     $('#compose-menu').css('visibility', 'visible');
     $('.header-login a').hide();
-    $('#user-name').html(loggedInUser);
+    $('#user-name').html(loggedInUser.name);
     $('#nav-bar #logout-menu').css('visibility', 'visible');
   } else {
     $('.header-login a').show();
@@ -54,7 +53,6 @@ function handleLoginState(){
 }
 
 function renderTweets (tweets) {
-  console.log(tweets.length);
   $('#tweets-section').empty();
   tweets.forEach((tweet) => {
     var $tweet = createTweetElement (tweet);
@@ -66,9 +64,8 @@ function loadTweets () {
   $.ajax({
     url: '/tweets',
     method: 'GET',
-    success: function ({tweets, username, email}, status) {
-      loggedInUser = username;
-      userEmail = email;
+    success: function ({tweets, user}) {
+      loggedInUser = user;
       handleLoginState();
       renderTweets(tweets);
     }
@@ -79,11 +76,22 @@ function postTweet (tweet) {
   $.ajax({
     url: '/tweets',
     method: 'POST',
-    data: {tweet, userEmail},
+    data: {tweet, loggedInUser},
     success: function (){
      loadTweets();
    }
  });
+}
+
+function logout(){
+  $.ajax({
+    url: '/tweets/logout',
+    method: 'POST',
+    success: function (){
+      loggedInUser = '';
+      handleLoginState();
+    }
+  });
 }
 
 function handleTweet(tweet){
@@ -124,15 +132,7 @@ $( function () {
     }
 
     if (id === 'logout'){
-      $.ajax({
-        url: '/tweets/logout',
-        method: 'POST',
-        success: function (){
-          loggedInUser = "";
-          userEmail = "";
-          handleLoginState();
-        }
-      });
+      logout();
     }
   });
 });
