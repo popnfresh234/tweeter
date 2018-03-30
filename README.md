@@ -2,7 +2,9 @@
 
 A simple AJAX based Twitter clone that makes use of jQuery, HTML, CSS and MongoDB.
 
-Users can register and login, the applicatoin currently assigns random names/avatars, though login information is persistent.
+Users can register and login, the applicatoin currently assigns random avatars, though login information is persistent.
+
+App uses SASS to generate CSS
 
 Cookie-session is used to manage cookies and bcrypt is used to hash user passwords for storage in MongoDB.
 
@@ -21,6 +23,7 @@ Cookie-session is used to manage cookies and bcrypt is used to hash user passwor
 - express
 - md5
 - mongodb
+- node-sass
 
 ## Screenshots
 
