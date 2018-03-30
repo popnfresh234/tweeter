@@ -86,6 +86,18 @@ function postTweet (tweet) {
  });
 }
 
+function logout(){
+  $.ajax({
+    url: '/tweets/logout',
+    method: 'POST',
+    success: function (){
+      loggedInUser = "";
+      userEmail = "";
+      handleLoginState();
+    }
+  });
+}
+
 function handleTweet(tweet){
   var errorMsg = $('.tweet-error');
   if ( tweet.length > 140 ) {
@@ -124,15 +136,7 @@ $( function () {
     }
 
     if (id === 'logout'){
-      $.ajax({
-        url: '/tweets/logout',
-        method: 'POST',
-        success: function (){
-          loggedInUser = "";
-          userEmail = "";
-          handleLoginState();
-        }
-      });
+      logout();
     }
   });
 });

@@ -82,11 +82,12 @@ module.exports = function(DataHelpers) {
 
 
   tweetsRoutes.post('/register', (req, res) => {
-    console.log("GOOD REG");
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
     let email = req.body.email;
     let password = req.body.password;
 
-    let user = userHelper.generateRandomUser(email, password);
+    let user = userHelper.generateRandomUser(firstName, lastName, email, password);
 
     if (!email || !password) {
       res.statusCode = 400;
