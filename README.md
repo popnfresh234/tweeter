@@ -24,6 +24,6 @@ Cookie-session is used to manage cookies and bcrypt is used to hash user passwor
 
 ## Screenshots
 
-!["Screen one"]()
-!["Screen two"]()
-!["Screen three"]()
+!["Screen one"](https://github.com/popnfresh234/tweeter/blob/master/docs/screen_one.png)
+!["Screen two"](https://github.com/popnfresh234/tweeter/blob/master/docs/screen_two.png)
+!["Screen three"](https://github.com/popnfresh234/tweeter/blob/master/docs/screen_three.png)
