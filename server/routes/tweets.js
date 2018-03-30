@@ -1,7 +1,6 @@
 
 const COOKIE_USER = 'user';
 const userHelper    = require("../lib/util/user-helper");
-
 const express       = require('express');
 const tweetsRoutes  = express.Router();
 const bcrypt = require('bcrypt');
