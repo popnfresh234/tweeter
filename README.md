@@ -6,6 +6,8 @@ Users can register and login, the applicatoin currently assigns random avatars, 
 
 App uses SASS to generate CSS
 
+App has been deployed to Heroku and [can be found here](https://agile-ocean-15477.herokuapp.com/)
+
 Cookie-session is used to manage cookies and bcrypt is used to hash user passwords for storage in MongoDB.
 
 ## Getting Started
